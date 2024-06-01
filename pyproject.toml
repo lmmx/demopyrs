@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=1.0,<2.0"]
+requires = ["maturin>=1,<2"]
 build-backend = "maturin"
 
 [project]
@@ -18,3 +18,7 @@ development = [
 test = [
     "pytest>=8.2.1",
 ]
+
+[tool.maturin]
+module-name = "demopyrs._lib"
+python-source = "python"

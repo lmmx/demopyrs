@@ -1,17 +1,7 @@
 use pyo3::prelude::*;
-use pyo3::wrap_pyfunction;
-use reqwest::header::{HeaderMap, HeaderValue, HeaderName};
 use reqwest::Client;
+use reqwest::header::{HeaderMap, HeaderValue, HeaderName};
 use std::collections::HashMap;
-use pyo3::types::PyModule;
-use pyo3::{pymodule, PyResult, Python};
-
-#[cfg(target_os = "linux")]
-use jemallocator::Jemalloc;
-
-#[global_allocator]
-#[cfg(target_os = "linux")]
-static ALLOC: Jemalloc = Jemalloc;
 
 #[pyclass]
 struct ApiClient {
@@ -61,9 +51,11 @@ fn create_api_client(headers: Option<HashMap<String, String>>) -> PyResult<ApiCl
     Ok(ApiClient::new(headers))
 }
 
+/// A Python module implemented in Rust. The name of this function must match
+/// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
+/// import the module.
 #[pymodule]
-fn demopyrs(_py: Python, m: &PyModule) -> PyResult<()> {
-    println!("Hello world");
+fn _lib(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add("__version__", env!("CARGO_PKG_VERSION"))?;
     m.add_class::<ApiClient>()?;
     m.add_function(wrap_pyfunction!(create_api_client, m)?)?;
