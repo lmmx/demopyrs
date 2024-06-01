@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 use pyo3::types::PyModule;
-use pyo3::{pymodule, PyResult, Python};
+use pyo3::{pymodule, PyResult};
 
 #[cfg(target_os = "linux")]
 use jemallocator::Jemalloc;
@@ -21,7 +21,7 @@ fn version() -> &'static str {
 }
 
 #[pymodule]
-fn demopyrs(_py: Python, m: &PyModule) -> PyResult<()> {
+fn demopyrs(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(version, m)?)?;
     m.add_function(wrap_pyfunction!(create_api_client, m)?)?;
     Ok(())
