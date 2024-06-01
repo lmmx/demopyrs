@@ -1,8 +1,5 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
-use reqwest::header::{HeaderMap, HeaderValue, HeaderName};
-use reqwest::Client;
-use std::collections::HashMap;
 use pyo3::types::PyModule;
 use pyo3::{pymodule, PyResult, Python};
 
