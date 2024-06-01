@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-pyo3 = { version = "0.21.2", features = ["extension-module", "gil-refs"] }
+pyo3 = { version = "0.21.2", features = ["extension-module", "abi3-py38", "gil-refs"] }
 reqwest = { version = "0.12.4", features = ["blocking"] }
 
 [lib]
