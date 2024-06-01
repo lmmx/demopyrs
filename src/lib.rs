@@ -1,28 +1,16 @@
 use pyo3::prelude::*;
-use pyo3::wrap_pyfunction;
-use pyo3::types::PyModule;
-use pyo3::{pymodule, PyResult};
 
-#[cfg(target_os = "linux")]
-use jemallocator::Jemalloc;
-
-#[global_allocator]
-#[cfg(target_os = "linux")]
-static ALLOC: Jemalloc = Jemalloc;
-
+/// Formats the sum of two numbers as string.
 #[pyfunction]
-fn create_api_client() -> PyResult<String> {
-    Ok("API Client Created".to_string())
+fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
+    Ok((a + b).to_string())
 }
 
-#[pyfunction]
-fn version() -> &'static str {
-    "0.1.0"
-}
-
+/// A Python module implemented in Rust. The name of this function must match
+/// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
+/// import the module.
 #[pymodule]
-fn demopyrs(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(version, m)?)?;
-    m.add_function(wrap_pyfunction!(create_api_client, m)?)?;
+fn demopyrs(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(sum_as_string, m)?)?;
     Ok(())
 }
